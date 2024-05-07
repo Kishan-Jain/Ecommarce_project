@@ -1,0 +1,8 @@
+/* mostlly we use bootstrap css but some special perpose we use this */
+
+
+.nav_scrollable-menu {
+    height: auto;
+    max-height: 350px;
+    overflow-x: hidden;
+}
