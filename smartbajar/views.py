@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-
-def homepage(request):
+from homepage import models
+def home(request):
     
     # offersData = navbar_offer.objects.all()
     # print(offersData)
