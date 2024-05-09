@@ -8,7 +8,7 @@ class offer_nav_admin(admin.ModelAdmin):
     list_display=('offer_title','offer_disc')
     
 class categories_admin(admin.ModelAdmin):
-    list_display=('title','disc','image')
+    list_display=('title','disc','links')
     
 admin.site.register(offer_nav, offer_nav_admin)
 admin.site.register(categories, categories_admin)

@@ -6,3 +6,28 @@
     max-height: 350px;
     overflow-x: hidden;
 }
+
+
+.category {
+    display:flex;
+    flex-wrap: wrap;
+    text-align: center;
+
+}
+
+.a {
+    text-decoration: none;
+
+}
+
+
+
+
+
+.inline {
+    display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+}

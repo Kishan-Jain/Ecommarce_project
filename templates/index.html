@@ -8,8 +8,7 @@
     <div class="col-8">
         <a class="p-2 text-muted" href="#">
             <div class="btn-group dropright">
-                <button type="button" class="btn" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         class="bi bi-list" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -35,12 +34,13 @@
         <marquee>
             {%if offersData %}
             {% for n in offersData %}
-            <H5 class="p-0 m-0 text-danger " style="display:inline;"> {{n.offer_title | safe}}</H5>  :- <p style="display: inline;">{{n.offer_disc | safe}} </p>
+            <H5 class="p-0 m-0 text-danger " style="display:inline;"> {{n.offer_title | safe}}</H5> :- <p
+                style="display: inline;">{{n.offer_disc | safe}} </p>
             {% endfor %}
             {% else %}
             <h5 class="p-0 m-0 text-danger">Today offers - error</h5>
             {% endif %}
-            
+
         </marquee>
     </div>
 </nav>
@@ -88,25 +88,32 @@
 
 <!--  -->
 
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">T-sirts for Men</h2>
-        <p class="lead">We provide exelent quality of cloths and dision </p>
-      </div>
-      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-        <img src="/static/pics/item/cloth/man/tshirt/1.jpg" alt="" height="100%" width="100%" style="border-radius: 5px;">
-      </div>
+
+<div class="category text-light ">
+    {% for i in categoriesData %}
+    <div class="inline rounded-right rounded-left bg-dark m-5 pl-5 pr-5 pb-5"
+        style="max-width: 320px; max-height: 450px">
+        <div class="inline" >
+            <h4>{{i.title}}</h4>
+        </div>
+        <div style="align-items: center; justify-content:center; margin: 10px">
+            <img src="/media/{{i.image}}" height="250px" width="200px" alt="" />
+
+        </div>
+        <div style="height: 80px; text-align:center">
+            <p>{{i.disc | safe}}</p>
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary button ">
+                <a href="/fashion/{{i.link}}/" class="a text-light">{{i.title}}</a>
+            </button>
+        </div>
     </div>
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-  </div>
-  
-  <!--  -->
+    {% endfor %}
+</div>
+
+
+
+<!--  -->
 
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from autoslug import AutoSlugField
 
 # Create your models here.
 
@@ -6,8 +7,10 @@ class offer_nav(models.Model):
     offer_title = models.CharField(max_length=100)
     offer_disc = models.TextField(max_length=500, null=True, default=" ")
     
+    
 class categories(models.Model):
     title = models.CharField(max_length=100)
-    image = models.FileField(upload_to="categaries/", default= " ", null=True, blank=True)
+    image = models.FileField(upload_to="pics/categaries/", default= " ", null=True, blank=True)
     disc = models.TextField(max_length=100, default=" ")
+    links = AutoSlugField(populate_from = "title", unique=True, null=True, default="")
     
