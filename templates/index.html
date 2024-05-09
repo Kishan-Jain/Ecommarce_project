@@ -33,14 +33,14 @@
     </div>
     <div class="col-4">
         <marquee>
-            <!-- {%if offersData %}
+            {%if offersData %}
             {% for n in offersData %}
-            <H5 class="p-0 m-0 text-danger"> {{n.offer_title}} :- {{n.offer_disp}} </H5>
+            <H5 class="p-0 m-0 text-danger " style="display:inline;"> {{n.offer_title | safe}}</H5>  :- <p style="display: inline;">{{n.offer_disc | safe}} </p>
             {% endfor %}
             {% else %}
-            <h5 class="p-0 m-0 text-danger">Today offers</h5>
-            {% endif %} -->
-            <h5>Helllo</h5>
+            <h5 class="p-0 m-0 text-danger">Today offers - error</h5>
+            {% endif %}
+            
         </marquee>
     </div>
 </nav>

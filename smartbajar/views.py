@@ -1,12 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from homepage import models
+from homepage.models import offer_nav
 def home(request):
     
-    # offersData = navbar_offer.objects.all()
-    # print(offersData)
-    # data = {
-    #     'offersData' : offersData
-    # }
+    offersData = offer_nav.objects.all()
+    print(offersData)
+    data = {
+        'offersData' : offersData
+    }
     
-    return render(request, "index.html")
+    return render(request, "index.html", data)
