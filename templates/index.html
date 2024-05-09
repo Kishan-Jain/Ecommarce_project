@@ -33,7 +33,14 @@
     </div>
     <div class="col-4">
         <marquee>
-            <H5 class="p-0 m-0 text-danger"> Today Deals = (date)</H5>
+            <!-- {%if offersData %}
+            {% for n in offersData %}
+            <H5 class="p-0 m-0 text-danger"> {{n.offer_title}} :- {{n.offer_disp}} </H5>
+            {% endfor %}
+            {% else %}
+            <h5 class="p-0 m-0 text-danger">Today offers</h5>
+            {% endif %} -->
+            <h5>Helllo</h5>
         </marquee>
     </div>
 </nav>
