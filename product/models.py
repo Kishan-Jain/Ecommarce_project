@@ -9,7 +9,10 @@ class fashion(models.Model):
     product_MRP = models.IntegerField()
     discount = models.IntegerField()
     def price(self):
-        return self.product_MRP * (self.discount /100)
+        totalPrice = str(self.product_MRP * (1-(self.discount /100))).split(".")
+        prices = float(totalPrice[0] +"." + totalPrice[1][:2])
+        
+        return prices
     product_pic = models.FileField(upload_to="product/fashion", default=" ", null= True, )
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)  

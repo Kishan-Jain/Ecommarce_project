@@ -30,6 +30,12 @@
 	</nav>
 </div>
 <!-- end nav bar -->
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+	  <li class="breadcrumb-item active" aria-current="page">{{numsDetails.title}}</li>
+	</ol>
+  </nav>
 <!-- menu functon -->
 <div style="display:flex; flex-wrap: wrap;">
 	<div class="collapse scroller" id="collapseExample" style="width:250px;">
@@ -51,7 +57,7 @@
 	<div class="row">
 		{% for i in fashionitem %}
 		<div class="col-sm-6 col-md-4 col-xl-3 mb-3"
-			style="display: flex; justify-content: space-between; flex-direction: column; align-items: center; ">
+			style="display: flex; justify-content: space-between; flex-direction: column; align-items: center; width:240px ">
 
 			<a href="/docs/4.4/examples/navbar-bottom/">
 				<div style="height: 190px !important; width: 180px !important;">
@@ -75,8 +81,9 @@
 					<b>{{i.product_MRP}}</b>
 				</button> -->
 
-				<div>
-					
+				<div class="text-center" style="line-height: 0.3; padding: 5px;" >
+					<p>-({{i.discount}})<strong>₹ {{i.price}} </strong></p>
+					<p>MRP. :<strong >{{i.product_MRP}}</strong></p>
 				</div>
 			</div>
 
