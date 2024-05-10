@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import antiqe, buety_product, daily_uses, divices, fashion, gerociry, kitchen_goods, leptop ,luxury, mobiles, stationary
 
+
 # Register your models here.
 
 class fashion_admin(admin.ModelAdmin):

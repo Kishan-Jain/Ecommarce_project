@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import offer_nav
-from .models import categories
+from .models import offer_nav, categories
+from product.models import fashion
+
 # Create your views here.
 
 
@@ -17,9 +18,12 @@ def home(request):
 
 def numDetails(request, slug):
     numsDetails = categories.objects.get(links = slug )
+    fashionitem = fashion.objects.all()
     data = {
         'numsDetails' : numsDetails,
+        'fashionitem' : fashionitem
     }
+    
     
     return render(request, "cat_base_page.html", data)
 
