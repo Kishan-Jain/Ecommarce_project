@@ -1,6 +1,75 @@
+{% extends "base.html" %}
+
 {% block contant %}
 
+<div class="nav-scroller bg-white shadow-sm">
+	<nav class="nav nav-underline">
 
 
+		<p>
+			<a class="btn text-primary m-0" data-toggle="collapse" href="#collapseExample" role="button"
+				aria-expanded="false" aria-controls="collapseExample">
+				Categaries
+			</a>
+		</p>
 
+
+		<a class="nav-link active" href="#">Dashboard</a>
+		<a class="nav-link" href="#">
+			Friends
+			<span class="badge badge-pill bg-light align-text-bottom">27</span>
+		</a>
+		<a class="nav-link" href="#">Suggestions</a>
+		<a class="nav-link" href="#">Link</a>
+		<a class="nav-link" href="#">Link</a>
+		<a class="nav-link" href="#">Link</a>
+		<a class="nav-link" href="#">Link</a>
+		<a class="nav-link" href="#">Link</a>
+	</nav>
+</div>
+<div style="display:flex; flex-wrap: wrap;">
+	<div class="collapse scroller" id="collapseExample" style="width:250px;">
+		<div class="card card-body p-0 mr-2">
+			<nav id="navbar-example3" class="navbar navbar-warning "
+				style=" max-height: 450px; overflow-x:hidden !important; background-color: #ffd47098;">
+				<nav class="nav nav-pills flex-column">
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+					<a class="nav-link" href="#item-1">Item 1</a>
+
+
+				</nav>
+			</nav>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-md-4 col-xl-3 mb-3">
+			<a href="/docs/4.4/examples/navbar-bottom/">
+				<img class="img-thumbnail mb-3" srcset="/docs/4.4/assets/img/examples/navbar-bottom.png,
+                                                /docs/4.4/assets/img/examples/navbar-bottom@2x.png 2x"
+					src="/media/{{i.product_pic}}" alt="Navbar bottom screenshot" width="480" height="300">
+				<h5 class="mb-1">{{i.product_title}}</h5>
+			</a>
+			<p class="text-muted">Single navbar example with a bottom navbar along with some additional content.</p>
+		</div>
+	</div>
+
+
+</div>
 {% endblock %}

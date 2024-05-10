@@ -21,5 +21,5 @@ def numDetails(request, slug):
         'numsDetails' : numsDetails,
     }
     
-    return render(request, "fashion.html", data)
+    return render(request, "cat_base_page.html", data)
 
