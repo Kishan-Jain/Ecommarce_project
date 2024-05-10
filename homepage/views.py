@@ -20,7 +20,6 @@ def numDetails(request, slug):
     data = {
         'numsDetails' : numsDetails,
     }
-    print(numsDetails.title)
-    print(numsDetails.disc)
-    return render(request, "welcome.html", data)
+    
+    return render(request, "fashion.html", data)
 
