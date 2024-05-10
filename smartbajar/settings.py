@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tinymce',# install via pip for test editor in admin panel
     'homepage',
+    'product',
 ]
 
 MIDDLEWARE = [
