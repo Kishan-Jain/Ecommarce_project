@@ -30,12 +30,13 @@ def home(request):
     try:
         
         email = request.POST.get("regemail")
-        name= request.POST.get("username")
-        passw = request.POST.ger("password")
+        username= request.POST.get("regusername")
+        password = request.POST.ger("regpassword")
 
         logindata = {
-            "username": name,
-            "password": passw
+            "email" : email,
+            "username": username,
+            "password": password,
         }
         return render(request, "index.html", data, logindata)
     except:

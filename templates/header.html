@@ -31,8 +31,8 @@
 				</li>
 
 				<li class="nav-item dropdown mr-4">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Categories
 					</a>
 					<div class="dropdown-menu nav_scrollable-menu" role="menu" aria-labelledby="navbarDropdown">
@@ -58,16 +58,16 @@
 					</div>
 				</li>
 				<form class="form-inline  my-lg-0">
-					<input class="form-control mr-sm-2" style="width:400px !important;" type="search" placeholder="Search"
-						aria-label="Search">
+					<input class="form-control mr-sm-2" style="width:400px !important;" type="search"
+						placeholder="Search" aria-label="Search">
 					<button class="btn btn-success mr-3 my-2 my-sm-0" type="submit">Search</button>
 				</form>
 
 			</ul>
 			<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 				<div class="btn-group" role="group">
-					<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
+					<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-person-circle" viewBox="0 0 16 16">
 							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -105,8 +105,8 @@
 					</div>
 				</div>
 				<button type="button" class="btn btn-danger">Order/return</button>
-				<button type="button" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-						fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+				<button type="button" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+						height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
 						<path
 							d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
 					</svg> Cart</button>
@@ -124,7 +124,7 @@
 		<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="signinmodalTitle">Sign-In to <strong>SmartBajaar</strong></h4>
+					<h4 class="modal-title" id="signinmodaltitle">Sign-In to <strong>SmartBajaar</strong></h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -140,14 +140,15 @@
 							<input type="email" id="inputEmail" class="form-control" placeholder=" Enter UserName here"
 								required="" autofocus="" name="userName">
 							<label for="inputPassword" class="sr-only">Password</label>
-							<input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""
-								name="password">
+							<input type="password" id="inputPassword" class="form-control" placeholder="Password"
+								required="" name="password">
 							<div class="checkbox mb-3">
 								<label>
 									<input type="checkbox" value="remember-me"> Remember me
 								</label>
 							</div>
 							<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -164,12 +165,12 @@
 
 
 	<!-- Modal -->
-	<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodalTitle"
+	<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodaltitle"
 		aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="signupmodalTitle">For Register :</h5>
+					<h5 class="modal-title" id="signupmodaltitle">For Register </h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -177,59 +178,66 @@
 				<div class="modal-body">
 					<form method="post" class="form-signin">
 						{% csrf_token %}
-						<img class="mb-4" src="/static/pics/favicon.ico" alt="" width="72" height="72">
-						<h1 class="h3 mb-3 font-weight-normal">Register in <strong>SmartBajaar</strong></h1>
+						<div class="mb-3">
+							<img class="mb-4" src="/static/pics/favicon.ico" alt="" width="72" height="72">
+							<h1 class="h3 mb-3 font-weight-normal">Register in <strong>SmartBajaar</strong></h1>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputEmail4">Email</label>
+									<input type="email" class="form-control" id="inputEmail4" name="regemail">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group">
+									<label for="inputFirstName">First Name</label>
+									<input type="text" class="form-control" id="inputFirstName" placeholder=""
+										name="regfirstname">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputLastName">Last Name</label>
+									<input type="text" class="form-control" id="inputLastName" name="reglastname">
 
-						<div class="form-group col-md-6">
-							<label for="inputEmail4">Email</label>
-							<input type="email" class="form-control" id="inputEmail4" name="regemail">
-						</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group">
+										<label for="inputUserName">UserName</label>
+										<input type="text" class="form-control" id="inputUserName"
+											placeholder="Use Username for LoginId" name="regusername">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="inputRegPassword">Password</label>
+										<input type="password" class="form-control" id="inputRegPassword"
+											name="regpass">
 
-						<div class="form-row">
-							<div class="form-group">
-								<label for="inputFirstName">First Name</label>
-								<input type="text" class="form-control" id="inputFirstName"
-									placeholder="Use Username for LoginId" name="regfirstname">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="inputLastName">Last Name</label>
-								<input type="password" class="form-control" id="inputLastName" name="reglastname">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group">
-								<label for="inputUserName">UserName</label>
-								<input type="text" class="form-control" id="inputUserName"
-									placeholder="Use Username for LoginId" name="regusername">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="inputRegPassword">Password</label>
-								<input type="password" class="form-control" id="inputRegPassword" name="regpass">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputCity">City</label>
-								<input type="text" class="form-control" id="inputCity" name="regcity">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="inputState">State</label>
-								<input type="text" class="form-control" id="inputstate" name="regstate">
-							</div>
-							<div class="form-group col-md-2">
-								<label for="inputZip">Pin\Zip</label>
-								<input type="text" class="form-control" id="inputZip" name="regpincode">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label for="inputCity">City</label>
+										<input type="text" class="form-control" id="inputCity" name="regcity">
+									</div>
+									<div class="form-group col-md-4">
+										<label for="inputState">State</label>
+										<input type="text" class="form-control" id="inputstate" name="regstate">
+									</div>
+									<div class="form-group col-md-2">
+										<label for="inputZip">Pin\Zip</label>
+										<input type="text" class="form-control" id="inputZip" name="regpincode">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="gridCheck">
+										<label class="form-check-label" for="gridCheck">
+											Check me out
+										</label>
+									</div>
+								</div>
+								<div class="form-row">
+									<div><button type="submit" class="btn btn-primary">Register</button></div>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="gridCheck">
-								<label class="form-check-label" for="gridCheck">
-									Check me out
-								</label>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary">Register</button>
 					</form>
 				</div>
 				<div class="modal-footer">
