@@ -13,47 +13,44 @@
 		<h1 class="h3 mb-3 font-weight-normal">Register in <strong>SmartBajaar</strong></h1>
 		<p>*** All fields are compulsory </p>
 		<div class="form-row">
-			<div class="form-group col-md-8">
-				<label for="inputEmail4">Email</label>
-				<input type="email" class="form-control" id="inputEmail4" name="regemail">
+			<div class="form-group col-md-7">
+				<label for="inputEmail4">Email : </label>
+				{{ registerform.emailId }}
 			</div>
 		</div>
 		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="inputFirstName">First Name</label>
-				<input type="text" class="form-control" id="inputFirstName" placeholder="" name="regfirstname">
+			<div class="form-group col-md-5">
+				<label for="inputFirstName">First Name : </label>
+				{{ registerform.firstName }}
 			</div>
-			<div class="form-group col-md-6">
-				<label for="inputLastName">Last Name</label>
-				<input type="text" class="form-control" id="inputLastName" name="reglastname">
-
+			<div class="form-group col-md-5">
+				<label for="inputLastName">Last Name : </label>
+				{{ registerform.lastName }}
 			</div>
 		</div>
 
 		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="inputUserName">UserName</label>
-				<input type="text" class="form-control" id="inputUserName" placeholder="Use Username for LoginId"
-					name="regusername">
+			<div class="form-group col-md-5">
+				<label for="inputUserName">UserName : </label>
+				{{ registerform.userName }}
 			</div>
-			<div class="form-group col-md-6">
-				<label for="inputRegPassword">Password</label>
-				<input type="password" class="form-control" id="inputRegPassword" name="regpass">
-
+			<div class="form-group col-md-5">
+				<label for="inputRegPassword">Password : </label>
+				{{ registerform.password }}
 			</div>
 		</div>
 		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="inputCity">City</label>
-				<input type="text" class="form-control" id="inputCity" name="regcity">
+			<div class="form-group col-md-5">
+				<label for="inputCity">City : </label>
+				{{ registerform.city }}
 			</div>
-			<div class="form-group col-md-4">
-				<label for="inputState">State</label>
-				<input type="text" class="form-control" id="inputstate" name="regstate">
+			<div class="form-group col-md-5">
+				<label for="inputState">State : </label>
+				{{ registerform.state }}
 			</div>
 			<div class="form-group col-md-2">
 				<label for="inputZip">Pin\Zip</label>
-				<input type="text" class="form-control" id="inputZip" name="regpincode">
+				{{ registerform.zipCode }}
 			</div>
 		
 		</div>
