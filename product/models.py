@@ -3,7 +3,7 @@ from tinymce.models import HTMLField
 from autoslug import AutoSlugField
 
 # Create your models here.
-class fashion(models.Model):
+class Fashion(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -18,7 +18,7 @@ class fashion(models.Model):
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)  
     
    
-class buety_product(models.Model):
+class Buety_Product(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -29,7 +29,7 @@ class buety_product(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class divices(models.Model):
+class Divices(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -40,7 +40,7 @@ class divices(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class mobiles(models.Model):
+class Mobiles(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -51,7 +51,7 @@ class mobiles(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class leptop(models.Model):
+class Leptop(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -62,7 +62,7 @@ class leptop(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class daily_uses(models.Model):
+class Daily_Uses(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -73,7 +73,7 @@ class daily_uses(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class gerociry(models.Model):
+class Gerociry(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -84,7 +84,7 @@ class gerociry(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class stationary(models.Model):
+class Stationary(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -95,7 +95,7 @@ class stationary(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class kitchen_goods(models.Model):
+class Kitchen_Goods(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -106,7 +106,7 @@ class kitchen_goods(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class luxury(models.Model):
+class Luxury(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()
@@ -117,7 +117,7 @@ class luxury(models.Model):
     pro_disc = HTMLField()
     slug = AutoSlugField(default=None , populate_from ='product_title', unique=True, null=True)
     
-class antiqe(models.Model):
+class Antiqe(models.Model):
     product_title = models.CharField(max_length=100)
     product_brand = models.CharField(max_length=100, default="", null= True)
     product_MRP = models.IntegerField()

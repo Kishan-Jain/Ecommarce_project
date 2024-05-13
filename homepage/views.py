@@ -1,14 +1,48 @@
 from django.shortcuts import render, redirect
-from .models import offer_nav, categories
-from product.models import fashion
+from .models import Offer_Nav, Categories
+from product.models import Fashion
+# from product.models import antiqe, buety_product, daily_uses, divices, fashion, gerociry, kitchen_goods, leptop ,luxury, mobiles, stationary
 
 # Create your views here.
 
 
+# def cat_base_page(request):
+#     antiqeitem =antiqe.objects.all()
+#     buety_productitem = buety_product.objects.all()
+#     daily_usesitem = daily_uses.objects.all()
+#     divicesitem = divices.objects.all()
+#     fashionitem = fashion.objects.all()
+#     gerociryitem = gerociry.objects.all()
+#     kitchen_goodsitem = kitchen_goods.objects.all()
+#     leptopitem = leptop.objects.all() 
+#     luxuryitem = luxury.objects.all()
+#     mobilesitem = mobiles.objects.all()
+#     stationaryitem = stationary.objects.all()
+
+#     data = {
+#         'antiqeitem' : antiqeitem,
+#         'buety_productitem' : buety_productitem,
+#         'daily_usesitem' : daily_usesitem,
+#         'divicesitem' : divicesitem,
+#         'fashionitem' : fashionitem,
+#         'gerociryitem' : gerociryitem,
+#         'kitchen_goodsitem': kitchen_goodsitem,
+#         'leptopitem' : leptopitem,
+#         'luxuryitem' : luxuryitem,
+#         'mobilesitem' : mobilesitem,
+#         'stationaryitem' : stationaryitem,
+
+#     }
+     
+#     return render(request, "cat_base_page.html", data)
+
+
+
+
 def home(request):
 
-    offersData = offer_nav.objects.all()
-    categoriesData = categories.objects.all()
+    offersData = Offer_Nav.objects.all()
+    categoriesData = Categories.objects.all()
     data = {
         'offersData' : offersData,
         'categoriesData' : categoriesData
@@ -45,33 +79,34 @@ def home(request):
     return render(request, "index.html", data)
 
 def numDetails(request, slug):
-    numsDetails = categories.objects.get(links = slug )
+    categoryName = Categories.objects.get(links = slug )
     
-    data = {
-        'numsDetails' : numsDetails,
-        
+    categoryTitle = {
+        'categoryName' : categoryName,
     }
     
-    categoriesData = categories.objects.all()
+    categoriesData = Categories.objects.all()
     
     if slug == "fashion":
-        fashionitem = fashion.objects.all()
+        fashionitem = Fashion.objects.all()
     
         data = {
             'categoriesData' : categoriesData,
-            'numsDetails' : numsDetails,
+            'categoryName' : categoryName,
             'fashionitem' : fashionitem
         }
         return render(request, "cat_base_page.html", data)
     
     
-    return render(request, "cat_base_page.html", data)
+    return render(request, "cat_base_page.html", categoryTitle)
 
 def fashionData(request):
-    fashionitem = fashion.objects.all()
+    fashionitem = Fashion.objects.all()
     
     data = {
         'fashionitem' : fashionitem
     }
     
     return render(request, "cat_base_page.html", data)
+
+

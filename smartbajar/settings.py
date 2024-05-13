@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'tinymce',# install via pip for test editor in admin panel
     'homepage',
     'product',
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -55,10 +56,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'smartbajar.urls'
 
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, "templates"],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
