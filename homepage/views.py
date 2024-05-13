@@ -80,12 +80,14 @@ def home(request):
 
 def numDetails(request, slug):
     categoryName = Categories.objects.get(links = slug )
+    categoriesData = Categories.objects.all()
     
     categoryTitle = {
         'categoryName' : categoryName,
+        'categoriesData' : categoriesData,
     }
     
-    categoriesData = Categories.objects.all()
+    
     
     if slug == "fashion":
         fashionitem = Fashion.objects.all()
