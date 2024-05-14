@@ -15,6 +15,6 @@ def register(request):
 
 def forgetPsw(request):
     fm = registerForm()
-    return render(request, "forgetPassword.html",{'regis' : fm})
+    return render(request, "forgetPassword.html",{'forgetpswd' : fm})
 
 

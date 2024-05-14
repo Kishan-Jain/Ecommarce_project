@@ -4,7 +4,7 @@
 
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-between; margin: 30px;>
-		<form method=" post" class="form-signin">
+	<form method=" POST" class="form-signin">
 	{% csrf_token %}
 	<div class="mb-3">
 		<div style="display: flex; flex-direction: row; justify-content: center; ">
@@ -13,28 +13,28 @@
 		<h1 class="h3 mb-3 font-weight-normal">Register in <strong>SmartBajaar</strong></h1>
 		<p>*** All fields are compulsory </p>
 		<div class="form-row">
-			<div class="form-group col-md-7">
+			<div class="form-group col-md-12">
 				<label for="inputEmail4">Email : </label>
 				{{ registerform.emailId }}
 			</div>
 		</div>
 		<div class="form-row">
-			<div class="form-group col-md-5">
+			<div class="form-group col-md-6">
 				<label for="inputFirstName">First Name : </label>
 				{{ registerform.firstName }}
 			</div>
-			<div class="form-group col-md-5">
+			<div class="form-group col-md-6">
 				<label for="inputLastName">Last Name : </label>
 				{{ registerform.lastName }}
 			</div>
 		</div>
 
 		<div class="form-row">
-			<div class="form-group col-md-5">
+			<div class="form-group col-md-6">
 				<label for="inputUserName">UserName : </label>
 				{{ registerform.userName }}
 			</div>
-			<div class="form-group col-md-5">
+			<div class="form-group col-md-6">
 				<label for="inputRegPassword">Password : </label>
 				{{ registerform.password }}
 			</div>
@@ -44,22 +44,21 @@
 				<label for="inputCity">City : </label>
 				{{ registerform.city }}
 			</div>
-			<div class="form-group col-md-5">
+			<div class="form-group col-md-4">
 				<label for="inputState">State : </label>
 				{{ registerform.state }}
 			</div>
-			<div class="form-group col-md-2">
+			<div class="form-group col-md-3">
 				<label for="inputZip">Pin\Zip</label>
 				{{ registerform.zipCode }}
 			</div>
-		
+
 		</div>
 		<div class="form-row">
-			<div><button type="submit" class="btn btn-primary">Register</button></div>
+			<div><input name="submit" label="submit" type="submit" class="btn btn-primary"></div>
 		</div>
 	</div>
-</div>
-</form>
+	</form>
 </div>
 
 
