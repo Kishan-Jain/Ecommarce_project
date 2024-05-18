@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'tinymce',# install via pip for test editor in admin panel
     'homepage',
     'product',
-    'login'
+    'login',
 ]
 
 MIDDLEWARE = [
@@ -57,8 +57,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'smartbajar.urls'
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 TEMPLATES = [
     {
@@ -132,6 +130,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS=[ STATIC_DIR ]
 
