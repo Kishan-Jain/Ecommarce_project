@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class LoginData(models.Model):
@@ -9,5 +10,4 @@ class LoginData(models.Model):
     userName = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=128)
     address = models.TextField(max_length=200)
-    
     

@@ -6,51 +6,57 @@
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-between; margin: 30px;>
 	<form method=" POST" class="form-signin">
 	{% csrf_token %}
-	<div class="mb-3">
+	<div class="mb-3 ">
 		<div style="display: flex; flex-direction: row; justify-content: center; ">
 			<img class="mb-4" src="/static/pics/favicon.ico" alt="" width="72" height="72">
 		</div>
 		<h1 class="h3 mb-3 font-weight-normal">Register in <strong>SmartBajaar</strong></h1>
 		<p>*** All fields are compulsory </p>
-		<div class="form-row">
-			<div class="form-group col-md-12">
-				<label for="inputEmail4">Email : </label>
-				{{ registerform.emailId }}
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="inputFirstName">First Name : </label>
-				{{ registerform.firstName }}
-			</div>
-			<div class="form-group col-md-6">
-				<label for="inputLastName">Last Name : </label>
-				{{ registerform.lastName }}
-			</div>
-		</div>
 
 		<div class="form-row">
 			<div class="form-group col-md-6">
-				<label for="inputUserName">UserName : </label>
-				{{ registerform.userName }}
+				<label for="inputFirstName">First Name : </label>
+				{{ RegisterFormData.first_name }}
 			</div>
 			<div class="form-group col-md-6">
+				<label for="inputLastName">Last Name : </label>
+				{{ RegisterFormData.last_name }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="inputEmail4">Email : </label>
+				{{ RegisterFormData.email }}
+			</div>
+			<div class="form-group col-md-6">
+				<label for="inputUserName">UserName : </label>
+				{{ RegisterFormData.username }}
+			</div>
+		</div>
+
+
+		<div class="form-row">
+			<div class="form-group col-md-6">
 				<label for="inputRegPassword">Password : </label>
-				{{ registerform.password }}
+				{{ RegisterFormData.password1 }}
+			</div>
+			<div class="form-group col-md-6">
+				<label for="inputRegPassword">Password(re_enter): </label>
+				{{ RegisterFormData.password2 }}
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-5">
 				<label for="inputCity">City : </label>
-				{{ registerform.city }}
+				{{ RegisterFormData.city }}
 			</div>
 			<div class="form-group col-md-4">
 				<label for="inputState">State : </label>
-				{{ registerform.state }}
+				{{ RegisterFormData.state }}
 			</div>
 			<div class="form-group col-md-3">
 				<label for="inputZip">Pin\Zip</label>
-				{{ registerform.zipCode }}
+				<span style="width:50px">{{ RegisterFormData.zip_code }}</span>
 			</div>
 
 		</div>
