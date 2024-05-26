@@ -32,8 +32,3 @@
     display: inline-block;
 }
 
-.m-auto{
-    margin-left:auto;
-    margin-right: auto;
-    max-width: 100%;
-}
