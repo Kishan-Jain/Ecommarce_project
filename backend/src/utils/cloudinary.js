@@ -33,3 +33,23 @@ export const uploadFileToCloudinary = async (localFilePath) => {
         
     }
 }
+
+// remove file 
+
+export const RemoveFileToCloudinary = async (file_id) => {
+    try {
+        if (!file_id) return null;
+        // upload file on cloudinary
+        const responce = await cloudinary.uploader.destroy(file_id)
+        .then(
+            // file deleted successfully
+            console.log("file deleted successfully")
+        )
+        return responce // return responce for uses
+        
+    } catch (error) {
+        // file unlink from sever if face any error to upload cloudinary 
+        return error
+        
+    }
+}

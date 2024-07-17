@@ -1,12 +1,31 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { RemoveFileToCloudinary, uploadFileToCloudinary, } from "../utils/cloudinary.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponce } from "../utils/apiResponce.js";
 
-export const addCategory = asyncHandler( async () => {
-// login seller => data - {name, pic }
+
+
+export const addProduct = asyncHandler( async(req, res) => {
+// seller 
+// product data - title, discription, categoryName, pics, price, discount, stock
+// pre build data - seller_name
+// 
+// 
+
 
 
 })
 
-export const addProduct = asyncHandler( async () => {
-// login seller => data - {name, }
+export const viewProduct = asyncHandler( async(req, res) => {
+
+})
+
+
+export const updateProductData = asyncHandler( async(req, res) => {
+
+})
+
+
+export const deleteProduct = asyncHandler( async(req, res) => {
 
 })
