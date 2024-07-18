@@ -9,12 +9,17 @@ import { ApiResponse } from "../utils/apiResponse.js";
 
 
 export const addCategory = asyncHandler(async (req, res) => {
+  
+  // Check if user is authenticated
+  if(!req.userId){
+    throw new ApiError(400, "Not Authenticate")
+  }
   // Check if request body is empty
   if (!req.body) {
     throw new ApiError(400, "No data received in the request body");
   }
 
-  const [title] = req.body; // Extract the category title from the request body
+  const { title } = req.body; // Extract the category title from the request body
 
   // Check if a title is blank
   if (title.trim() === "") {
@@ -32,10 +37,10 @@ export const addCategory = asyncHandler(async (req, res) => {
     throw new ApiError(500, "File path not found");
   }
 
+  let categoryPicCloudinary;
   try {
     // Upload the file to Cloudinary and get the Cloudinary URL
-    const categoryPicCloudinary =
-      await uploadFileToCloudinary(categoryPicLocalPath);
+    categoryPicCloudinary = await uploadFileToCloudinary(categoryPicLocalPath);
   } catch (error) {
     throw new ApiError(
       500,
@@ -47,9 +52,10 @@ export const addCategory = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to receive file data from Cloudinary");
   }
 
+  let newCategory;
   try {
     // Create a new category in the database
-    const addCategory = await Category.create({
+    newCategory = await Category.create({
       title: title,
       pic: categoryPicCloudinary.url,
     });
@@ -61,7 +67,7 @@ export const addCategory = asyncHandler(async (req, res) => {
   }
 
   // Retrieve the newly added category
-  const newCategory = await Category.findById(addCategory._id);
+  newCategory = await Category.findById(newCategory._id);
 
   if (!newCategory) {
     throw new ApiError(500, "Category data not found");
@@ -70,10 +76,16 @@ export const addCategory = asyncHandler(async (req, res) => {
   // Return a success response with the new category data
   return res
     .status(201)
-    .json(new ApiResponse(200, newCategory, "Category added successfully"));
+    .json(new ApiResponse(201, newCategory, "Category added successfully"));
 });
 
 export const viewAllCategories = asyncHandler(async (req, res) => {
+  
+  // Check if user is authenticated
+  if(!req.userId){
+    throw new ApiError(400, "Not Authenticate")
+  }
+  
   // Retrieve all categories from the database
   const allCategories = await Category.find();
 
@@ -88,7 +100,13 @@ export const viewAllCategories = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, allCategories, "All categories data received"));
 });
 
+
 export const updateCategoryData = asyncHandler(async (req, res) => {
+  // Check if user is authenticated
+  if(!req.userId){
+    throw new ApiError(400, "Not Authenticate")
+  }
+
   if (!req.body) {
     throw new ApiError(400, "No data received");
   }
@@ -165,91 +183,106 @@ export const updateCategoryData = asyncHandler(async (req, res) => {
     );
 });
 
-export const updateCategoryPic = asyncHandler( async (req, res) => {
-  // body - categoryId
-  // new pic
-  // sharch category Data by Id
-  // upload new pic and store responce
-  // found old pic public_Id and remove its to cloudinary
-  // set category pic url by responce
-  // return result
-  
+export const updateCategoryPic = asyncHandler(async (req, res) => {
+  // Update category picture:
+  // 1. Check if user is authenticated
+  // 2. Check if request body is empty
+  // 3. Retrieve category data by ID
+  // 4. Upload new picture and store response
+  // 5. Find old picture public ID and remove it from Cloudinary
+  // 6. Set category picture URL by response
+  // 7. Return result
+
   // Check if user is authenticated
-  if(!req.userId){
-    throw new ApiError(400, "Seller not Authenticate")
+  if (!req.userId) {
+    throw new ApiError(400, "Not Authenticate");
   }
-  
+
   // Check if request body is empty
   if (!req.body) {
     throw new ApiError(400, "No data received");
   }
-  const [categoryId] = req.body
 
-  if (categoryData.trim() === ""){
-    throw new ApiError(400, "Category Id is required")
+  // Destructure categoryId from request body
+  const [categoryId] = req.body;
+
+  // Check if categoryId is empty
+  if (categoryId.trim() === "") {
+    throw new ApiError(400, "Category Id is required");
   }
 
-  const categoryData = await Category.findById({_id : categoryId})
+  // Retrieve category data by ID
+  const categoryData = await Category.findById({ _id: categoryId });
 
+  // Check if category data exists
   if (!categoryData) {
-    throw new ApiError(400, "Category Id is valid Or Not Exits")
+    throw new ApiError(400, "Category Id is invalid or does not exist");
   }
 
-  if(!req.file){
-    throw new ApiError(400, "file not received or file upload faild")
+  // Check if file is received
+  if (!req.file) {
+    throw new ApiError(400, "File not received or file upload failed");
   }
 
-  const categoryNewPicLocalPath = req.file?.path
+  const categoryNewPicLocalPath = req.file?.path;
 
-  if (!categoryNewPicLocalPath){
-    throw new ApiError(500, "file upload faild")
-  }
-
-  try {
-    const uploadNewPicResponce = await uploadFileToCloudinary(categoryNewPicLocalPath)
-
-  } catch (error) {
-    throw new ApiError(500, "File upload on cloudinary faild")
-  }
-
-  if(!uploadNewPicResponce){
-    throw new ApiError(500, "file not upload successfully")
+  // Check if file path exists
+  if (!categoryNewPicLocalPath) {
+    throw new ApiError(500, "File upload failed");
   }
 
   try {
-    const deleteOldPicResponce = await RemoveFileToCloudinary(categoryData.pic)
+    // Upload new picture to Cloudinary
+    const uploadNewPicResponse = await uploadFileToCloudinary(categoryNewPicLocalPath);
   } catch (error) {
-    throw new ApiError(500, "File deletetion on cloudinary faild")
+    throw new ApiError(500, "File upload on Cloudinary failed");
   }
 
-  if (!deleteOldPicResponce){
-    throw new ApiError(500, "file not deleted successfully")
+  // Check if file upload was successful
+  if (!uploadNewPicResponse) {
+    throw new ApiError(500, "File not uploaded successfully");
   }
-try {
+
+  try {
+    // Remove old picture from Cloudinary
+    const deleteOldPicResponse = await RemoveFileToCloudinary(categoryData.pic);
+  } catch (error) {
+    throw new ApiError(500, "File deletion on Cloudinary failed");
+  }
+
+  // Check if file deletion was successful
+  if (!deleteOldPicResponse) {
+    throw new ApiError(500, "File not deleted successfully");
+  }
+
+  try {
+    // Update category picture URL in database
     categoryData = await Category.findByIdAndUpdate(
-      {_id : categoryId},
+      { _id: categoryId },
       {
-        $set : {
-          pic : uploadNewPicResponce.url
-        }
+        $set: {
+          pic: uploadNewPicResponse.url,
+        },
       },
-      {new:true}
-    )
-  
-} catch (error) {
-  throw new ApiError(500, "Database Error - Category pic not save")
-}
-
-  if (!categoryData) {
-  throw new ApiError(500, "Category pic not updated on database")
+      { new: true }
+    );
+  } catch (error) {
+    throw new ApiError(500, "Database Error - Category picture not saved");
   }
 
+  // Check if category data was updated in the database
+  if (!categoryData) {
+    throw new ApiError(500, "Category picture not updated in database");
+  }
+
+  // Return success response with updated category data
   return res
-  .status(200)
-  .json(
-    new ApiResponse(200, categoryData, "Category Pic updated successfully")
-  )
-})
+    .status(200)
+    .json(
+      new ApiResponse(200, categoryData, "Category picture updated successfully")
+    );
+});
+
 
 export const deleteCategory = asyncHandler(async (req, res) => {
   if (!req.body) {
