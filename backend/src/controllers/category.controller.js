@@ -5,7 +5,7 @@ import {
   uploadFileToCloudinary,
 } from "../utils/cloudinary.js";
 import { ApiError } from "../utils/apiError.js";
-import { ApiResponce } from "../utils/apiResponce.js";
+import { ApiResponse } from "../utils/apiResponse.js";
 
 
 export const addCategory = asyncHandler(async (req, res) => {
@@ -70,7 +70,7 @@ export const addCategory = asyncHandler(async (req, res) => {
   // Return a success response with the new category data
   return res
     .status(201)
-    .json(new ApiResponce(200, newCategory, "Category added successfully"));
+    .json(new ApiResponse(200, newCategory, "Category added successfully"));
 });
 
 export const viewAllCategories = asyncHandler(async (req, res) => {
@@ -157,7 +157,7 @@ export const updateCategoryData = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(
-      new ApiResponce(
+      new ApiResponse(
         200,
         updatedCategory,
         "Category data updated successfully"
@@ -189,5 +189,5 @@ export const deleteCategory = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponce(200, {}, "Category deleted successfully"));
+    .json(new ApiResponse(200, {}, "Category deleted successfully"));
 });

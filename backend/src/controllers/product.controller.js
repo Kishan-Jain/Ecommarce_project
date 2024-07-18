@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { RemoveFileToCloudinary, uploadFileToCloudinary, } from "../utils/cloudinary.js";
 import { ApiError } from "../utils/apiError.js";
-import { ApiResponce } from "../utils/apiResponce.js";
+import { ApiResponse } from "../utils/apiResponse.js";
 
 
 
