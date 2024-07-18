@@ -165,6 +165,92 @@ export const updateCategoryData = asyncHandler(async (req, res) => {
     );
 });
 
+export const updateCategoryPic = asyncHandler( async (req, res) => {
+  // body - categoryId
+  // new pic
+  // sharch category Data by Id
+  // upload new pic and store responce
+  // found old pic public_Id and remove its to cloudinary
+  // set category pic url by responce
+  // return result
+  
+  // Check if user is authenticated
+  if(!req.userId){
+    throw new ApiError(400, "Seller not Authenticate")
+  }
+  
+  // Check if request body is empty
+  if (!req.body) {
+    throw new ApiError(400, "No data received");
+  }
+  const [categoryId] = req.body
+
+  if (categoryData.trim() === ""){
+    throw new ApiError(400, "Category Id is required")
+  }
+
+  const categoryData = await Category.findById({_id : categoryId})
+
+  if (!categoryData) {
+    throw new ApiError(400, "Category Id is valid Or Not Exits")
+  }
+
+  if(!req.file){
+    throw new ApiError(400, "file not received or file upload faild")
+  }
+
+  const categoryNewPicLocalPath = req.file?.path
+
+  if (!categoryNewPicLocalPath){
+    throw new ApiError(500, "file upload faild")
+  }
+
+  try {
+    const uploadNewPicResponce = await uploadFileToCloudinary(categoryNewPicLocalPath)
+
+  } catch (error) {
+    throw new ApiError(500, "File upload on cloudinary faild")
+  }
+
+  if(!uploadNewPicResponce){
+    throw new ApiError(500, "file not upload successfully")
+  }
+
+  try {
+    const deleteOldPicResponce = await RemoveFileToCloudinary(categoryData.pic)
+  } catch (error) {
+    throw new ApiError(500, "File deletetion on cloudinary faild")
+  }
+
+  if (!deleteOldPicResponce){
+    throw new ApiError(500, "file not deleted successfully")
+  }
+try {
+    categoryData = await Category.findByIdAndUpdate(
+      {_id : categoryId},
+      {
+        $set : {
+          pic : uploadNewPicResponce.url
+        }
+      },
+      {new:true}
+    )
+  
+} catch (error) {
+  throw new ApiError(500, "Database Error - Category pic not save")
+}
+
+  if (!categoryData) {
+  throw new ApiError(500, "Category pic not updated on database")
+  }
+
+  return res
+  .status(200)
+  .json(
+    new ApiResponse(200, categoryData, "Category Pic updated successfully")
+  )
+})
+
 export const deleteCategory = asyncHandler(async (req, res) => {
   if (!req.body) {
     throw new ApiError(400, "Category ID not received");

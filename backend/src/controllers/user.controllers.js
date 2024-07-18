@@ -6,19 +6,32 @@ import { accessAndRefreshTokenGenrator } from "../utils/accessRefreshTokenGenrat
 import { uploadFileToCloudinary } from "../utils/cloudinary.js";
 
 export const userRegister = asyncHandler(async (req, res) => {
-  // register user :
-  // 1. data --> validate (data / already exits) ---> server store --> db - model - data set
+  // Register user:
+  // 1. Validate data (check if data is provided and if user already exists)
+  // 2. Store data in the server
+  // 3. Save data to the database
 
+  // Check if request body is empty
+  if (!req.body) {
+    throw new ApiError(400, "No data received");
+  }
+
+  // Destructure user details from request body
   const { username, fullName, email, password } = req.body;
+
+  // Check if any field is empty
   if (
     [username, fullName, email, password].some((field) => field?.trim() === "")
   ) {
     throw new ApiError(400, "All fields are required");
   }
+
+  // Check if username already exists
   if (await User.findOne({ username })) {
-    throw new ApiError(409, "Username allready exits");
+    throw new ApiError(409, "Username already exists");
   }
 
+  // Create new user
   const newUser = await User.create({
     username,
     fullName,
@@ -26,50 +39,69 @@ export const userRegister = asyncHandler(async (req, res) => {
     password,
   });
 
-  const newCreaterUser = await User.findById(newUser._id).select(
+  // Retrieve newly created user without password, refreshToken, and __v fields
+  const newCreatedUser = await User.findById(newUser._id).select(
     "-password -refreshToken -__v"
   );
 
-  if (!newCreaterUser) {
-    throw new ApiError(500, "unfortunately, user not created");
+  // Check if user creation failed
+  if (!newCreatedUser) {
+    throw new ApiError(500, "Unfortunately, user not created");
   }
-  console.log("statusCode: 201 - user registed successfully");
+
+  console.log("statusCode: 201 - user registered successfully");
+
+  // Return success response with new user data
   return res
     .status(201)
-    .json(new ApiResponse(200, newCreaterUser, "user registered successfully"));
+    .json(new ApiResponse(200, newCreatedUser, "User registered successfully"));
 });
 
 export const userLogin = asyncHandler(async (req, res) => {
-  // data from frount {username, password } --> chack is empty --> username exit or not -->
-  // varify password -- > access token + login permission
+  // User login:
+  // 1. Validate data from front-end (username, password)
+  // 2. Check if username exists
+  // 3. Verify password
+  // 4. Generate access token and login permission
+
+  // Check if request body is empty
   if (!req.body) {
-    throw ApiError(400, "No any data recived");
+    throw ApiError(400, "No data received");
   }
+
+  // Destructure login details from request body
   const { username, password, saveInfo } = req.body;
 
+  // Check if any field is empty
   if (
     [username, password, saveInfo].some(
       (field) => field?.toString().trim() === ""
     )
   ) {
-    throw new ApiError(400, "All field is requide");
-  }
-  const SearchUser = await User.findOne({ username });
-
-  if (!SearchUser) {
-    throw new ApiError(409, "User not exits");
+    throw new ApiError(400, "All fields are required");
   }
 
-  if (!(await SearchUser.isPasswordCorrect(password))) {
+  // Find user by username
+  const searchUser = await User.findOne({ username });
+
+  // Check if user does not exist
+  if (!searchUser) {
+    throw new ApiError(409, "User not exists");
+  }
+
+  // Verify password
+  if (!(await searchUser.isPasswordCorrect(password))) {
     throw new ApiError(400, "Incorrect password");
   }
 
   if (saveInfo) {
+    // Generate refresh and access tokens
     const { refreshToken, accessToken } =
-      await accessAndRefreshTokenGenrator(SearchUser);
+      await accessAndRefreshTokenGenrator(searchUser);
 
+    // Update user details with last login time and refresh token
     const userDetails = await User.findByIdAndUpdate(
-      SearchUser._id,
+      searchUser._id,
       {
         $set: {
           lastLogin: Date.now(),
@@ -84,18 +116,21 @@ export const userLogin = asyncHandler(async (req, res) => {
       secure: true,
     };
 
-    console.log(`status: 200 - login successfully `);
+    console.log(`status: 200 - login successfully`);
 
+    // Return success response with cookies and user details
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
-      .json(new ApiResponse(200, userDetails, "login successfully"));
+      .json(new ApiResponse(200, userDetails, "Login successfully"));
   } else {
-    const accessToken = await SearchUser.genrateAccessToken();
+    // Generate access token
+    const accessToken = await searchUser.generateAccessToken();
 
+    // Update user details with last login time and remove refresh token
     const userDetails = await User.findByIdAndUpdate(
-      SearchUser._id,
+      searchUser._id,
       {
         $set: {
           lastLogin: Date.now(),
@@ -110,31 +145,36 @@ export const userLogin = asyncHandler(async (req, res) => {
       secure: true,
     };
 
-    console.log(`status: 200 - login successfully `);
+    console.log(`status: 200 - login successfully`);
 
+    // Return success response with cookie and user details
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
-      .json(new ApiResponse(200, userDetails, "login successfully"));
+      .json(new ApiResponse(200, userDetails, "Login successfully"));
   }
 });
 
 export const logOutUser = asyncHandler(async (req, res) => {
-  // chack user login or not by auth midileware
-  // take user id by middleware and make refresh token in database
-  // remove all cookies
-  // console.log(req.userId)
-  if (!req.userId) {
-    throw new ApiError(500, "auth middle not work properlly");
+  // User logout:
+  // 1. Check if user is logged in using auth middleware
+  // 2. Retrieve user ID from middleware and clear refresh token in database
+  // 3. Remove all cookies
+
+  // Check if user is authenticated
+  if(!req.userId){
+    throw new ApiError(400, "Seller not Authenticate")
   }
+
   try {
+    // Clear refresh token in database
     await User.findByIdAndUpdate(req.userId, {
       $set: {
         refreshToken: null,
       },
-    }).select("-password ");
+    }).select("-password");
   } catch (error) {
-    throw ApiError(500, error?.massage || "server not connected with database");
+    throw ApiError(500, error?.message || "Server not connected with database");
   }
 
   const options = {
@@ -142,59 +182,73 @@ export const logOutUser = asyncHandler(async (req, res) => {
     secure: true,
   };
 
+  // Return success response and clear cookies
   return res
     .status(200)
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "User logged Out Successfully"));
+    .json(new ApiResponse(200, {}, "User logged out successfully"));
 });
 
+
 export const setAvtar = asyncHandler(async (req, res) => {
-  // retrebe data by req.userId
-  // retrebe file server path by multer meddleware
-  // upload the file in cloudinary and save url on user
+  // Retrieve data by req.userId
+  // Retrieve file server path by multer middleware
+  // Upload the file to Cloudinary and save URL on user
+
   // Check if user is authenticated
   if (!req.userId) {
     throw new ApiError(400, "User not Authenticate");
   }
+
   console.log(req.file);
   const localAvatarPath = req.file?.path;
 
+  // Check if file path exists
   if (!localAvatarPath) {
     throw new ApiError(404, "File not exits");
   }
 
-  const responce = await uploadFileToCloudinary(localAvatarPath);
+  // Upload file to Cloudinary
+  const response = await uploadFileToCloudinary(localAvatarPath);
 
-  if (!responce) {
-    throw new ApiError(500, "unfortunataly, file not upload successfully!!");
+  // Check if file upload was successful
+  if (!response) {
+    throw new ApiError(500, "Unfortunately, file not uploaded successfully!!");
   }
 
-  console.log(responce);
+  console.log(response);
   try {
+    // Update user avatar URL in database
     await User.findByIdAndUpdate(
       req.userId,
       {
         $set: {
-          avatar: responce.url,
+          avatar: response.url,
         },
       },
       { new: true }
     );
   } catch (error) {
-    throw new ApiError(500, error?.massage || "server db connection error");
+    throw new ApiError(500, error?.message || "Server DB connection error");
   }
+
+  // Retrieve updated user data without password and refreshToken fields
   const userAvatar = await User.findById(req.userId).select(
     "-password -refreshToken"
   );
+
+  // Return success response with updated user avatar
   return res.status(200).json(new ApiResponse(200, { userAvatar }, ""));
 });
 
 export const addAddress = asyncHandler(async (req, res) => {
-  // add address
+  // Add address
 
+  // Destructure address details from request body
   const { area, city, state, pincode } = req.body;
 
+  // Check if any field is empty
   if (
     [area, city, state, pincode].some(
       (field) => field?.toString().trim() === ""
@@ -204,27 +258,35 @@ export const addAddress = asyncHandler(async (req, res) => {
   }
 
   try {
+    // Retrieve user address from database
     const userAddress = await User.findById(req.userId).select("address");
 
+    // Add new address to user's address array
     userAddress.address.push({ area, city, state, pincode });
     userAddress.save({ validateBeforeSave: false, new: true });
   } catch (error) {
     throw new ApiError(500, error || "Address not set");
   }
 
-  const SearchUser = await User.findById(req.userId).select(
+  // Retrieve updated user data without password and refreshToken fields
+  const searchUser = await User.findById(req.userId).select(
     "-password -refreshToken"
   );
+
+  // Return success response with updated user data
   return res
     .status(200)
-    .json(new ApiResponse(200, SearchUser, "massage : done"));
+    .json(new ApiResponse(200, searchUser, "Message: Address added sussfully"));
 });
 
-export const addProductOnCart = asyncHandler(async (req, res) => {
-  // add address
 
+export const addProductOnCart = asyncHandler(async (req, res) => {
+  // Add product to cart
+
+  // Destructure address details from request body
   const { area, city, state, pincode } = req.body;
 
+  // Check if any field is empty
   if (
     [area, city, state, pincode].some(
       (field) => field?.toString().trim() === ""
@@ -234,28 +296,35 @@ export const addProductOnCart = asyncHandler(async (req, res) => {
   }
 
   try {
+    // Retrieve user address from database
     const userAddress = await User.findById(req.userId).select("address");
 
+    // Add new address to user's address array
     userAddress.address.push({ area, city, state, pincode });
     userAddress.save({ validateBeforeSave: false, new: true });
   } catch (error) {
     throw new ApiError(500, error || "Address not set");
   }
 
-  const SearchUser = await User.findById(req.userId).select(
+  // Retrieve updated user data without password and refreshToken fields
+  const searchUser = await User.findById(req.userId).select(
     "-password -refreshToken"
   );
+
+  // Return success response with updated user data
   return res
     .status(200)
-    .json(new ApiResponse(200, SearchUser, "massage : done"));
+    .json(new ApiResponse(200, searchUser, "Message: done"));
 });
 
 
 export const addProductOnWiselist = asyncHandler(async (req, res) => {
-  // add address
+  // Add product to wishlist
 
+  // Destructure address details from request body
   const { area, city, state, pincode } = req.body;
 
+  // Check if any field is empty
   if (
     [area, city, state, pincode].some(
       (field) => field?.toString().trim() === ""
@@ -265,20 +334,25 @@ export const addProductOnWiselist = asyncHandler(async (req, res) => {
   }
 
   try {
+    // Retrieve user address from database
     const userAddress = await User.findById(req.userId).select("address");
 
+    // Add new address to user's address array
     userAddress.address.push({ area, city, state, pincode });
     userAddress.save({ validateBeforeSave: false, new: true });
   } catch (error) {
     throw new ApiError(500, error || "Address not set");
   }
 
-  const SearchUser = await User.findById(req.userId).select(
+  // Retrieve updated user data without password and refreshToken fields
+  const searchUser = await User.findById(req.userId).select(
     "-password -refreshToken"
   );
+
+  // Return success response with updated user data
   return res
     .status(200)
-    .json(new ApiResponse(200, SearchUser, "massage : done"));
+    .json(new ApiResponse(200, searchUser, "Message: done"));
 });
 
 
